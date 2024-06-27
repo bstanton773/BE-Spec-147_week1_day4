@@ -156,3 +156,49 @@ my_tree.insert(63)
 print(my_tree.find_node(63))
 
 my_tree.reverse_traversal()
+
+
+
+# Binary Tree
+# Like a BST, each node has two children
+# Unlike a BST, the order does not matter. It will fill in to whatever slot is open
+
+class BinaryTreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, value):
+        if self.root is None:
+            self.root = BinaryTreeNode(value)
+        else:
+            self._insert_recursive(self.root, value)
+
+    def _insert_recursive(self, node, value):
+        if node is None:
+            return BinaryTreeNode(value)
+        else:
+            if node.left is None:
+                node.left = BinaryTreeNode(value)
+            elif node.right is None:
+                node.right = BinaryTreeNode(value)
+            else:
+                # If both left and right children are present, recursively call insert on left child
+                self._insert_recursive(node.left, value)
+
+    def find(self, value):
+        return self._find_recursive(self.root, value)
+
+    def _find_recursive(self, node, value):
+        if node is None:
+            return False
+        elif node.value == value:
+            return True
+        else:
+            # Recursively search in left and right subtrees
+            return self._find_recursive(node.left, value) or self._find_recursive(node.right, value)
