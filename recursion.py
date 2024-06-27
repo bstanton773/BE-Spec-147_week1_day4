@@ -218,3 +218,67 @@ def reverse_print(a_list):
 
 
 reverse_print(['a', 'b', 'c', 'd', 'e', 'f'])
+
+
+# In Class Exercise
+
+print('''
+You are working on a file management application, and your task is to implement a function that calculates the total size of all files within folder. This function should recursively traverse through the folders and sum up the sizes of all files encountered.
+
+1. Define a Python function named **`calculate_total_folder_size`** that takes a single parameter: **`folder`** (a list representing the folder structure with file sizes).
+2. Implement the recursive logic inside the **`calculate_total_folder_size`** function to traverse through the nested folders and calculate the total size of all files.
+3. Use the provided file system analogy to guide your implementation.
+4. Upon encountering a file (leaf node), add its size to a running total.
+5. Recursively traverse through subfolders to include their files' sizes in the total.
+6. Return the total size of all files in the file system structure.
+''')
+
+file_system = [
+    [10, 20, 30],  # Folder 1 with files of sizes 10, 20, and 30
+    [15, [25, 35]],  # Folder 2 with a file of size 15, and another folder with files of size 25, and 35
+    40,  # File 1 with size 40
+    [45, [55, 65]],  # Folder 3 with file of sizes 45, and another folder with file sizes 55, and 65
+    70  # File 2 with size 70
+]
+
+def calculate_total_folder_size(folder):
+    # Start with a size of 0
+    total_size = 0
+    # Look at every item in the folder
+    for item in folder:
+        # If the item is an integer
+        if isinstance(item, int):
+            # Add the integer to the title size
+            total_size += item
+        # If the item is a list
+        elif isinstance(item, list):
+            # Recursively call the calculate_total_folder_size on the subfolder
+            total_size_of_subfolder = calculate_total_folder_size(item)
+            # Add that subfolder's size to the total_size
+            total_size += total_size_of_subfolder
+    # Once we loop through all items in folder, return the total size
+    return total_size
+
+print(calculate_total_folder_size(file_system)) # Output: 410 (sum of all files)
+
+
+def calculate_total_folder_size(folder):
+    # Start with a size of 0
+    total_size = 0
+    # Look at every item in the folder
+    for item in folder:
+        # If the item is an integer
+        if isinstance(item, list):
+            # Recursively call the calculate_total_folder_size on the subfolder
+            total_size_of_subfolder = calculate_total_folder_size(item)
+            # Add that subfolder's size to the total_size
+            total_size += total_size_of_subfolder
+        else:
+            # Add the integer to the title size
+            total_size += item
+        # If the item is a list
+    # Once we loop through all items in folder, return the total size
+    return total_size
+
+def get_size(folder):
+    return sum(get_size(item) if isinstance(item,list) else item for item in folder)
